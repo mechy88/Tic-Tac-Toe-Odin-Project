@@ -1,14 +1,19 @@
+ui_gameboard = document.querySelector("#gameboard");
+console.log(ui_gameboard);
+
+let tiles = [[], [], []];
+
 function Gameboard() {
     this.tiles = [["-", "-", "-"], ["-", "-", "-"], ["-", "-", "-"]];
 }
 
 function Gamemode(gameboard) {
+    // true = X; false = O
+    this.state = true;
     this.gameboard = gameboard;
-    this.markX = (x, y) => {
-        gameboard.tiles[x][y] = "x"
-    };
-    this.markO = (x, y) => {
-        gameboard.tiles[x][y] = "o"
+    this.mark = (sym, x, y) => {
+        gameboard.tiles[x][y] = sym;
+        return new Move(sym, x, y);
     };
 
     //Utility Functions
@@ -49,8 +54,34 @@ function Move(sym, x, y) {
     this.y = y;
 }
 
+function render(gameboard) {
+    for (let x = 0; x < ui_gameboard.children.length; x++) {
+        for (let y = 0; y < ui_gameboard.children[x].children.length; y++) {
+            ui_gameboard.children[x].children[y].textContent = gameboard.tiles[x][y];
+        }
+    }
+}
+
 gameboard = new Gameboard();
 gamemode = new Gamemode(gameboard);
+
+for (let x = 0; x < ui_gameboard.children.length; x++) {
+    for (let y = 0; y < ui_gameboard.children[x].children.length; y++) {
+        ui_tile = ui_gameboard.children[x].children[y];
+        ui_tile.x = x;
+        ui_tile.y = y;
+
+        console.log(ui_tile.x, ui_tile.y);
+        ui_tile.addEventListener('click', () => {
+            let sym = gamemode.state ? "x" : "o";
+            move = gamemode.mark(sym, ui_gameboard.children[x].children[y].x, ui_gameboard.children[x].children[y].y);
+            render(gameboard);
+            if (gamemode.winCheck(move)) alert("Win!");
+            gamemode.state = !gamemode.state;
+
+        })
+    }
+}
 
 // console.log(gamemode.printPretty());
 

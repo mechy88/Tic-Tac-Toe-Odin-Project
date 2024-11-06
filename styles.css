@@ -1,0 +1,42 @@
+* {
+    /* border: 1px solid green; */
+}
+
+#screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#dialogue {
+    text-align: center;
+}
+
+#gameboard {
+    display: flex;
+    flex-direction: column;
+    height: 250px;
+    width: 200px;
+    gap: 5px;
+}
+
+.row {
+    flex: auto;
+    display: flex;
+    gap: 5px;
+}
+
+.cell {
+    flex: auto;
+    background-color: aqua;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+}
+
+#action {
+    align-self: center;
+}
